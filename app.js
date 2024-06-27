@@ -78,7 +78,7 @@ app.post('/login', async (req, res) => {
 
 app.get('/dashboard', async (req, res) => {
   try {
-    const city = req.query.city || 'London'; // Default city if not provided
+    const city = req.query.city || 'London'; 
     const airQualityResponse = await fetch(`https://api.api-ninjas.com/v1/airquality?city=${encodeURIComponent(city)}`, {
       headers: { 'X-Api-Key': 'b1jGFbtAkmONTWlVPMXI0DKzJFFfQTdTimpi9EQP' }
     });
