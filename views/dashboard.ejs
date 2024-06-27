@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #007bff;
+    }
+    form {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 60%;
+      margin-right: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .info-section {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .info-section h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .info-section p {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    .aqi {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    .aqi h2 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    .aqi p {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+    .no-data {
+      text-align: center;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the Dashboard</h1>
+
+    <form action="/dashboard" method="GET">
+      <input type="text" name="city" placeholder="Enter city name" value="<%= city %>">
+      <button type="submit">Search</button>
+    </form>
+
+    <div class="info-section">
+      <% if (airQuality && Object.keys(airQuality).length > 0) { %>
+        <h2>Air Quality Data for <%= city %></h2>
+        <% if (airQuality.PM2_5) { %>
+          <p><strong>PM2.5:</strong> <%= airQuality.PM2_5.concentration %> µg/m³ (AQI: <%= airQuality.PM2_5.aqi %>)</p>
+        <% } %>
+        <% if (airQuality.PM10) { %>
+          <p><strong>PM10:</strong> <%= airQuality.PM10.concentration %> µg/m³ (AQI: <%= airQuality.PM10.aqi %>)</p>
+        <% } %>
+        <% if (airQuality.CO) { %>
+          <p><strong>CO:</strong> <%= airQuality.CO.concentration %> ppm (AQI: <%= airQuality.CO.aqi %>)</p>
+        <% } %>
+        <% if (airQuality.NO2) { %>
+          <p><strong>NO2:</strong> <%= airQuality.NO2.concentration %> ppb (AQI: <%= airQuality.NO2.aqi %>)</p>
+        <% } %>
+        <% if (airQuality.O3) { %>
+          <p><strong>O3:</strong> <%= airQuality.O3.concentration %> ppb (AQI: <%= airQuality.O3.aqi %>)</p>
+        <% } %>
+        <% if (airQuality.SO2) { %>
+          <p><strong>SO2:</strong> <%= airQuality.SO2.concentration %> ppb (AQI: <%= airQuality.SO2.aqi %>)</p>
+        <% } %>
+        <div class="aqi">
+          <h2>Overall AQI:</h2>
+          <p><%= airQuality.overall_aqi %></p>
+        </div>
+      <% } else { %>
+        <p class="no-data">No air quality data available for <%= city %>.</p>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>
